@@ -1,0 +1,30 @@
+module pixel (	input clk, 
+					input mode,
+					input rst, 
+					output [10:0] xpos, ypos,
+					output disp_active,
+					input [7:0] R_in, G_in, B_in,
+					output [7:0] R, G, B,
+					output hsync, vsync,
+					output hsync_neg, vsync_neg
+					);
+
+localparam [10:0] x0=100, y0=100, x1=300, y1=400;		//unde punem pixelul aprins
+
+wire clock;
+
+/*assign R = (disp_active==1) ? ( (xpos==x1 && ypos==y1) ? R_in : 8'b0000_0000) : 8'b0000_0000;
+assign G = (disp_active==1) ? ( (xpos==x1 && ypos==y1) ? G_in : 8'b0000_0000) : 8'b0000_0000;
+assign B = (disp_active==1) ? ( (xpos==x1 && ypos==y1) ? B_in : 8'b0000_0000) : 8'b0000_0000;*/
+
+assign R = (disp_active==1) ? ( ((xpos<x1 && xpos>x0) && (ypos<y1 && ypos>y0)) ? R_in : 8'b0000_0000) : 8'b0000_0000;
+assign G = (disp_active==1) ? ( ((xpos<x1 && xpos>x0) && (ypos<y1 && ypos>y0)) ? G_in : 8'b0000_0000) : 8'b0000_0000;
+assign B = (disp_active==1) ? ( ((xpos<x1 && xpos>x0) && (ypos<y1 && ypos>y0)) ? B_in : 8'b0000_0000) : 8'b0000_0000;
+
+assign hsync_neg = ~hsync;
+assign vsync_neg = ~vsync;
+	
+ceas c (clk, mode, clock);
+choose_sync sincr(clock, rst, mode, xpos, ypos, vsync, hsync, disp_active);
+
+endmodule

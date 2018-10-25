@@ -1,0 +1,11 @@
+module divizor_simplu #(parameter N = 2)(input clock, output out);
+
+reg [2:0] numar=0;
+
+always @ (posedge clock)
+
+     numar <= numar + 1;
+
+assign out = numar[N];
+
+endmodule
