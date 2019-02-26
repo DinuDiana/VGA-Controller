@@ -20,7 +20,7 @@ module vsync#(parameter b=600, //activ
    
    always @(posedge newline_clk)
 	 if (count < b)
-	   disp_active 		<= 1;     //activ on 1
+	   disp_active 		<= 1;     //active on 1
 	 else
 	   disp_active 		<= 0;
       
@@ -28,7 +28,7 @@ module vsync#(parameter b=600, //activ
 	 begin
 		if (count < y)
 		  vsync 	<= 1;
-		else if (count >= y && count < y_back)      //activ on 0
+		 else if (count >= y && count < y_back)      //active on 0
 		  vsync 	<= 0;
 		else if (count >= y_back)
 		  vsync 	<= 1;
